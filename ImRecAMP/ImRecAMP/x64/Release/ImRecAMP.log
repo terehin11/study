@@ -1,0 +1,14 @@
+﻿  ImRecAMPDlg.cpp
+c:\users\svt\desktop\imrecamp\imrecamp\imrecampdlg.cpp(159): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\svt\desktop\imrecamp\imrecamp\imrecampdlg.cpp(140): warning C4101: y: неиспользованная локальная переменная
+c:\users\svt\desktop\imrecamp\imrecamp\imrecampdlg.cpp(140): warning C4101: x: неиспользованная локальная переменная
+c:\users\svt\desktop\imrecamp\imrecamp\imrecampdlg.cpp(175): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\svt\desktop\imrecamp\imrecamp\imrecampdlg.cpp(182): warning C4018: <=: несоответствие типов со знаком и без знака
+c:\users\svt\desktop\imrecamp\imrecamp\imrecampdlg.cpp(194): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\svt\desktop\imrecamp\imrecamp\imrecampdlg.cpp(196): warning C4018: >: несоответствие типов со знаком и без знака
+  Создание кода
+  0 of 394 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Создание кода завершено
+  ImRecAMP.vcxproj -> C:\Users\svt\Desktop\ImRecAMP\x64\Release\ImRecAMP.exe
