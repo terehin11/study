@@ -193,58 +193,57 @@ void graphics::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	Rect wndRect = GetRect(lpDrawItemStruct);
 
-	Bitmap imagenew(L"Lenna_(test_image).bmp");
+	//Bitmap imagenew(L"Lenna_(test_image).bmp");
 
 	if (img)
 	{
-		Image im(L"Lenna_(test_image).bmp", 0);
-		gr.DrawImage(&im, wndRect);
+		gr.DrawImage(im, wndRect);
 	}
 
 	//Получения размера картинки
-	width = imagenew.GetWidth();
-	height = imagenew.GetHeight();
+	//width = imagenew.GetWidth();
+	//height = imagenew.GetHeight();
 	//Запись в переменную Rect
-	Rect copy_rect(0, 0, width, height);
+	//Rect copy_rect(0, 0, width, height);
 	//Клонируем наше изображения
-	Bitmap *copy = imagenew.Clone(copy_rect, PixelFormat32bppRGB);
-	Status st;
-	Gdiplus::BitmapData newbitmapData;
+	//Bitmap *copy = imagenew.Clone(copy_rect, PixelFormat32bppRGB);
+	//Status st;
+	//Gdiplus::BitmapData newbitmapData;
 
 
 	//Блокируем биты
-	st = copy->LockBits(&copy_rect, ImageLockModeRead | ImageLockModeWrite, PixelFormat32bppRGB, &newbitmapData);
+	//st = copy->LockBits(&copy_rect, ImageLockModeRead | ImageLockModeWrite, PixelFormat32bppRGB, &newbitmapData);
 	//Получаем указатель на первый элемент в памяти
-	unsigned* ptrFirstPixel1;
-	ptrFirstPixel1 = (unsigned*)newbitmapData.Scan0;
+	//unsigned* ptrFirstPixel1;
+	//ptrFirstPixel1 = (unsigned*)newbitmapData.Scan0;
 	if (noiseDraw)
 	{
 
 
 
-		Noise(ptrFirstPixel1);
+		//Noise(ptrFirstPixel1);
 
-		st = copy->UnlockBits(&newbitmapData);
+		//st = copy->UnlockBits(&newbitmapData);
 
-		gr.DrawImage(copy, wndRect);
+		gr.DrawImage(noiseIm, wndRect);
 	}
-	if (noiseFiltr)
-	{
-		st = copy->LockBits(&copy_rect, ImageLockModeRead, PixelFormat32bppRGB, &newbitmapData);
-		Bitmap* copy_filter = copy->Clone(copy_rect, PixelFormat32bppRGB);
-		unsigned* ptrFirstPixelFilter;
-		Gdiplus::BitmapData newbitmapDataFiltr;
-		st = copy_filter->LockBits(&copy_rect, ImageLockModeRead | ImageLockModeWrite, PixelFormat32bppRGB, &newbitmapDataFiltr);
+	//if (noiseFiltr)
+	//{
+	//	st = copy->LockBits(&copy_rect, ImageLockModeRead, PixelFormat32bppRGB, &newbitmapData);
+	//	Bitmap* copy_filter = copy->Clone(copy_rect, PixelFormat32bppRGB);
+	//	unsigned* ptrFirstPixelFilter;
+	//	Gdiplus::BitmapData newbitmapDataFiltr;
+	//	st = copy_filter->LockBits(&copy_rect, ImageLockModeRead | ImageLockModeWrite, PixelFormat32bppRGB, &newbitmapDataFiltr);
 
-		ptrFirstPixelFilter = (unsigned*)newbitmapDataFiltr.Scan0;
+	//	ptrFirstPixelFilter = (unsigned*)newbitmapDataFiltr.Scan0;
 
-		Med_Filtr(ptrFirstPixel1, ptrFirstPixelFilter);
-		st = copy_filter->UnlockBits(&newbitmapDataFiltr);
+	//	Med_Filtr(ptrFirstPixel1, ptrFirstPixelFilter);
+	//	st = copy_filter->UnlockBits(&newbitmapDataFiltr);
 
-		gr.DrawImage(copy_filter, wndRect);
-		delete copy_filter;
-	}
-	delete copy;
+	//	gr.DrawImage(copy_filter, wndRect);
+	//	delete copy_filter;
+	//}
+	//delete copy;
 }
 
 
