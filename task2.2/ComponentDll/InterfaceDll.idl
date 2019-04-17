@@ -1,0 +1,119 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+
+//////////////////////////////////////////////////////////////////////////
+// Тип объекта
+
+enum ObjectType
+{
+	// целый
+	otInt,
+
+	// вещественный
+	otDouble,
+
+	// массив
+	otArray
+};
+
+
+//////////////////////////////////////////////////////////////////////////
+// Объект - значение произвольного типа (предварительное объявление)
+
+
+
+//////////////////////////////////////////////////////////////////////////
+// ObjectArray - Массив значений Object
+
+struct ObjectArray
+{
+	// элементы массива
+	enum Object *Data;
+
+	// количество элементов массива
+	unsigned Count;
+};
+
+//////////////////////////////////////////////////////////////////////////
+// Объект - значение произвольного типа
+
+struct Object
+{
+	// тип объекта
+	struct ObjectType Type;
+
+	[switch_is(Type)]
+	union
+	{
+		// значение целого типа
+		[case(otInt)]
+		int Int;
+
+		// значение вещественного типа
+		[case(otDouble)]
+		double Double;
+
+		// значение типа "массив"
+		[case(otArray)]
+		struct ObjectArray *Array;
+	} Value;
+};
+
+
+
+
+
+
+[
+	object, 
+	uuid (BAE1D3B7-6DC9-4B0B-AE41-0B805DA2BD6E)
+]
+interface ICollection: IUnknown
+{
+	// добавить элемент в коллекцию
+	 HRESULT __stdcall Add(struct Object obj);
+
+	// удалить элемент из коллекции
+	 HRESULT __stdcall Remove(struct Object obj);
+
+	// получить количество элементов коллекции
+	 HRESULT __stdcall GetCount(unsigned *count);
+
+	// преобразовать коллекцию в массив
+	 HRESULT __stdcall ToArray(struct ObjectArray **arr);
+};
+
+
+[
+	object,
+	uuid(DDD1F943-4473-45AC-BBB3-71EDDCCFEA16)
+]
+interface IEnumerator :IUnknown
+{
+	// возврат в исходное состояние
+	 HRESULT __stdcall Reset();
+
+	// переход к следующему элементу
+	 HRESULT __stdcall MoveNext(int *result);
+
+	// получить текущий элемент
+	 HRESULT __stdcall GetCurrent(struct Object *obj);
+};
+
+
+[
+	uuid(DA858506-B7FE-4597-AA98-B27E8192E4DD),
+	version(1.0)
+]
+library MyComLib
+{
+	[
+		uuid(BAEFF6E6-637D-484B-9C90-A1167664C6CC)
+	]
+	coclass CList
+	{
+		[default] interface ICollection;
+		interface IEnumerator;
+	};
+}

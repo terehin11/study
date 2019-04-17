@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{d0f59033-2195-4c99-8e71-1d6e2581774d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Созданные файлы">
+      <UniqueIdentifier>{c374dcdc-9776-45e9-837e-3351e2251ec3}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Componentps.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Component_i.c">
+      <Filter>Созданные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Component_p.c">
+      <Filter>Созданные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="dlldata.c">
+      <Filter>Созданные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

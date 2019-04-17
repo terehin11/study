@@ -1,0 +1,39 @@
+// Component.idl: источник IDL для Component
+//
+
+// Этот файл будет обработан средством MIDL для
+// создания библиотеки типов (Component.tlb) и кода маршалирования.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(C3B731C9-55E5-429A-BB3B-BACC9BAADC5A),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IComponentClass : IDispatch{
+	[id(1)] HRESULT Add([in] DOUBLE value);
+	[id(2)] HRESULT Remove([in] DOUBLE value);
+	[id(3)] HRESULT GetData([out, retval] SAFEARRAY(double)* _array);
+	[propget, id(4)] HRESULT Count([out, retval] ULONG* pVal);
+	[propget, id(5)] HRESULT Mean([out, retval] DOUBLE* pVal);
+};
+[
+	uuid(61F3E2B0-680D-4B38-AA60-82EF49262D6F),
+	version(1.0),
+]
+library ComponentLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(D742843C-95B8-43F9-9FBB-CE04EEB3488A)		
+	]
+	coclass ComponentClass
+	{
+		[default] interface IComponentClass;
+	};
+};
+

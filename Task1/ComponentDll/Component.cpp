@@ -4,7 +4,7 @@ const bool operator == (const Object &a, const Object &b)
 {
 	if (a.Type != b.Type)
 	{
-		cout << "Different type!!" << endl;
+
 		return false;
 	}
 	else
@@ -103,7 +103,7 @@ const bool operator == (const Object &a, const Object &b)
 			(*arr)->Data[i] = it;
 			i++;
 		}
-		//переписать !!! copy(List.begin(), List.end(), arr);
+
 		return S_OK;
 	}
 
@@ -111,15 +111,16 @@ const bool operator == (const Object &a, const Object &b)
 	// Методы IEnumerator
 	HRESULT __stdcall CList::Reset()
 	{
-		List.clear();
+		iter = List.rend();
 		return S_OK;
 	}
 	HRESULT __stdcall CList::MoveNext(int *result)
 	{
+		
 		if (iter == List.rbegin()) *result = 0;
 		else
 		{
-			iter++;
+			iter--;
 			*result = 1;
 		}
 		return S_OK;
