@@ -1,19 +1,26 @@
 #pragma once
+
 using namespace std;
-
-
 using namespace Gdiplus;
 
 //структура цвета
 struct MyRGB
 {
-	unsigned R;
-	unsigned G;
-	unsigned B;
+	unsigned char R;
+	unsigned char G;
+	unsigned char B;
 };
+
 class graphics: public CStatic
 {
+	//===========================================================================================
+	/////////////////////////////////////Объекты/////////////////////////////////////////////////
+	Bitmap *im;
+	//============================================================================================
+
 	DECLARE_DYNAMIC(graphics);
+
+	void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
 
 public:
 	graphics();
@@ -21,27 +28,14 @@ public:
 	//===========================================================================================
 	////////////////////////////////////Методы///////////////////////////////////////////////////
 
-	Rect GetRect(LPDRAWITEMSTRUCT lpDrawItemStruct);//Функция получения размера Picture Control
-	void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
-
-	void mepaint()//функция для вызова DrawItems 
+	void SetBitmap(Bitmap *bmp)
 	{
-		Invalidate();
+		if (im != nullptr) delete im;
+		im = bmp;
+		Invalidate(FALSE);
 	}
-	//===========================================================================================
 
 	//===========================================================================================
-	/////////////////////////////////////Объекты/////////////////////////////////////////////////
-	bool noiseDraw;//для рисования зашумленного изображения
-	bool noiseFiltr;//для рисования восстановленного изображения 
-	bool img;//для рисования исходного изображения
-
-	Image *im;
-	Bitmap* noiseIm;
-	Bitmap* filtrIm;
-	int width;
-	int height;
-	//============================================================================================
 
 protected:
 	DECLARE_MESSAGE_MAP();

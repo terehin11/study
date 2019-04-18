@@ -15,7 +15,7 @@ void main()
 		//pICol = ICollectionPtr(__uuidof(CList));
 		IComponentClassPtr IComCl= IComponentClassPtr(__uuidof(ComponentClass));
 		//HRESULT hr = IComCl.CreateInstance(__uuidof(ComponentClass));
-		
+		HRESULT hr;
 		IComCl->Add(3.);
 		cout << "Добавлено 3" << endl;
 
@@ -43,26 +43,66 @@ void main()
 		CComSafeArray<double> csafeAr;
 		csafeAr.Attach(safAr);
 
+		cout << endl << "Список элементов" << endl;
 		for (int i = 0; i < csafeAr.GetCount(); i++)
 		{
 			cout << "Элемент: " << csafeAr[i] << endl;
 		}
 
+		cout << endl << endl << endl << endl << "Используем IDispatch"  << endl << endl;
 
 
+		DISPPARAMS disp = { 0 };
 		IDispatchPtr IDis;
-		IComCl->QueryInterface(&IDis);
+		DISPID dispid;
+		OLECHAR* name = L"Add";
+		hr = IComCl->QueryInterface(&IDis);
+		hr = IDis->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+		_variant_t vart(3.);
+		disp.rgvarg = &vart;
+		disp.cArgs = 1;
+		hr = IDis->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &disp, NULL, NULL, NULL);
+		cout << "Добавлен элемент 3" << endl;
+
+		name = L"Remove";
+		hr = IDis->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+		vart = 10.;
+		disp.rgvarg = &vart;
+		disp.cArgs = 1;
+		hr = IDis->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &disp, NULL, NULL, NULL);
+		cout << "Удален элемент 10" << endl;
+
+		name = L"Count";
+		hr = IDis->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+		disp.rgvarg = 0;
+		disp.cArgs = 0;
+		_variant_t tmp;
+		hr = IDis->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &disp, &tmp, NULL, NULL);	
+		cout << "Элементов в списке: " << (unsigned long)tmp << endl;
+
+		name = L"Mean";
+		hr = IDis->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+		disp.rgvarg = 0;
+		disp.cArgs = 0;
+		tmp = 0;
+		hr = IDis->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &disp, &tmp, NULL, NULL);
+		cout << "Среднее значение: " << (double)tmp << endl;
+
+		name = L"GetData";
+		hr = IDis->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+		//vart = safAr;
+		disp.rgvarg = 0;
+		disp.cArgs = 0;
+		hr = IDis->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &disp, &vart, NULL, NULL);
+		csafeAr.Destroy();
+		csafeAr.Attach(vart.parray);
+		cout << endl << "Список элементов" << endl;
+		for (int i = 0; i < csafeAr.GetCount(); i++)
+		{
+			cout << "Элемент: " << csafeAr[i] << endl;
+		}
+
 	}
 	
 }
-
-//
-//void test()
-//{
-//	HRESULT hr = OleInitialize(NULL);
-//	//wchar_t progid[] = L";
-//	CLSID clsid;
-//	hr = CLSIDFromProgID(progid, &clsid);
-//	IDispatch* pIDispatch = NULL;
-//}
 

@@ -2,8 +2,6 @@
 #include "graphics.h"
 #include "vector"
 
-
-
 ULONG_PTR token;
 
 IMPLEMENT_DYNAMIC(graphics, CStatic);
@@ -17,55 +15,30 @@ graphics::graphics()
 	{
 		MessageBox(L"Error", L"", MB_OK | MB_ICONERROR);
 	}
-	width = 0;
-	height = 0;
-}
 
+	im = nullptr;
+}
 
 graphics::~graphics()
 {
+	delete im;
 	GdiplusShutdown(token);
 }
+
 BEGIN_MESSAGE_MAP(graphics, CStatic)
 END_MESSAGE_MAP()
 
-//Функция получения размера Picture Control
-Rect graphics::GetRect(LPDRAWITEMSTRUCT lpDrawItemStruct)
+void graphics::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
+	Graphics gr(lpDrawItemStruct->hDC);
 	Rect  wndRect(
 		0,
 		0,
 		lpDrawItemStruct->rcItem.right - lpDrawItemStruct->rcItem.left + 1,
 		lpDrawItemStruct->rcItem.bottom - lpDrawItemStruct->rcItem.top + 1);
-	return wndRect;
-}
 
-
-void graphics::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
-{
-
-	Graphics gr(lpDrawItemStruct->hDC);
-
-	Rect wndRect = GetRect(lpDrawItemStruct);
-
-	if (img)
+	if (im != nullptr)
 	{
 		gr.DrawImage(im, wndRect);
 	}
-
-	if (noiseDraw)
-	{
-
-		gr.DrawImage(noiseIm, wndRect);
-	}
-	if (noiseFiltr)
-	{
-		gr.DrawImage(filtrIm, wndRect);
-	}
-
 }
-
-
-
-
-
